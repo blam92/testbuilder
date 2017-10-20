@@ -18,7 +18,7 @@ var detectNetwork = function(cardNumber) {
     return 'Visa';
   } else if((cardNumber.slice(0,2) === '51' || cardNumber.slice(0,2) === '52' || cardNumber.slice(0,2) === '53' || cardNumber.slice(0,2) === '54' || cardNumber.slice(0,2) === '55') && cardNumber.length === 16) {
     return 'MasterCard';
-  } else if((cardNumber.slice(0,4) === '6011' || cardNumber.slice(0,7) === '644-649' || cardNumber.slice(0,2) === '65') && (cardNumber.length === 16 || cardNumber.length === 19)) {
+  } else if((cardNumber.slice(0,4) === '6011' || (parseInt(cardNumber.slice(0,3)) > 643 && parseInt(cardNumber.slice(0,3)) < 650) || cardNumber.slice(0,2) === '65') && (cardNumber.length === 16 || cardNumber.length === 19)) {
     return 'Discover';
   } else if((cardNumber.slice(0,4) === '5018' || cardNumber.slice(0,4) === '5020' || cardNumber.slice(0,4) === '5038' || cardNumber.slice(0,4) === '6304') && (cardNumber.length > 11 && cardNumber.length < 20)) {
     return 'Maestro';
@@ -49,4 +49,5 @@ detectNetwork('5512345678901234');
 detectNetwork('6011345678901234');
 detectNetwork('6011345678901234567');
 detectNetwork('5018345678901234567');
+
 
