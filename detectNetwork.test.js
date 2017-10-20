@@ -142,12 +142,59 @@ describe('MasterCard', function() {
 describe('Discover', function() {
   // Tests without a function will be marked as "pending" and not run
   // Implement these tests (and others) and make them pass!
-  it('has a prefix of 6011 and a length of 16');
-  it('has a prefix of 6011 and a length of 19');
+  it('has a prefix of 6011 and a length of 16', function() {
+    detectNetwork('6011345678901234').should.equal('Discover');
+  });
+
+  it('has a prefix of 6011 and a length of 19', function() {
+    detectNetwork('6011345678901234567').should.equal('Discover');
+  });
+
+  it('has a prefix of 65 and a length of 16', function() {
+    detectNetwork('6511345678901234').should.equal('Discover');
+  });
+
+  it('has a prefix of 65 and a length of 19', function() {
+    detectNetwork('6541345678901234567').should.equal('Discover');
+  });
+
+  for(var prefix = 644; prefix <= 649; prefix++) {
+    (function(firstThreeNumbers) {
+      it('has a prefix of ' + firstThreeNumbers + ' and a length of 16', function() {
+        detectNetwork(firstThreeNumbers + '1345678901234').should.equal('Discover');
+      });
+
+      it('has a prefix of ' + firstThreeNumbers + ' and a length of 19', function() {
+        detectNetwork(firstThreeNumbers + '1345678901234567').should.equal('Discover');
+      });
+    })(prefix);
+  }
 });
 
 describe('Maestro', function() {
-  // Write full test coverage for the Maestro card
+  var maestroCard = '501834567890';
+  var maestroCard2 = '502034567890';
+  var maestroCard3 = '503834567890';
+  var maestroCard4 = '630434567890';
+
+  function createAndTestValidMaestroCards(card, message) {
+    it(message, function() {
+      detectNetwork(card).should.equal('Maestro');
+    })
+  }
+
+  for(var length = 12; length < 20; length++) {
+
+    createAndTestValidMaestroCards(maestroCard, 'has a prefix of 5018 and a length of ' + length);
+    createAndTestValidMaestroCards(maestroCard2, 'has a prefix of 5020 and a length of ' + length);
+    createAndTestValidMaestroCards(maestroCard3, 'has a prefix of 5038 and a length of ' + length);
+    createAndTestValidMaestroCards(maestroCard4, 'has a prefix of 5038 and a length of ' + length);
+
+    maestroCard += '0';
+    maestroCard2 += '0';
+    maestroCard3 += '0';
+    maestroCard4 += '0';
+  }
 });
 
 describe('should support China UnionPay')
