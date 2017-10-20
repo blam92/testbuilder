@@ -14,6 +14,8 @@ var detectNetwork = function(cardNumber) {
     return 'Diner\'s Club';
   } else if(cardNumber.slice(0,2) === '34' || cardNumber.slice(0,2) === '37' && cardNumber.length === 15){
     return 'American Express';
+  } else if((cardNumber.slice(0,4) === '4903' || cardNumber.slice(0,4) === '4905' || cardNumber.slice(0,4) === '4911' || cardNumber.slice(0,4) === '4936' || cardNumber.slice(0,6) === '564182' || cardNumber.slice(0,6) === '633110' || cardNumber.slice(0,4) === '6333' || cardNumber.slice(0,4) === '6759') && (cardNumber.length === 18 || cardNumber.length === 16 || cardNumber.length === 19)) {
+    return 'Switch';
   } else if(cardNumber.slice(0,1) === '4' && (cardNumber.length === 13 || cardNumber.length === 16 || cardNumber.length === 19)) {
     return 'Visa';
   } else if((cardNumber.slice(0,2) === '51' || cardNumber.slice(0,2) === '52' || cardNumber.slice(0,2) === '53' || cardNumber.slice(0,2) === '54' || cardNumber.slice(0,2) === '55') && cardNumber.length === 16) {
@@ -22,6 +24,8 @@ var detectNetwork = function(cardNumber) {
     return 'Discover';
   } else if((cardNumber.slice(0,4) === '5018' || cardNumber.slice(0,4) === '5020' || cardNumber.slice(0,4) === '5038' || cardNumber.slice(0,4) === '6304') && (cardNumber.length > 11 && cardNumber.length < 20)) {
     return 'Maestro';
+  } else if(((parseInt(cardNumber.slice(0,6)) > 622125 && parseInt(cardNumber.slice(0,6)) < 622926) || (parseInt(cardNumber.slice(0,3)) > 623 && parseInt(cardNumber.slice(0,3)) < 627) || (parseInt(cardNumber.slice(0,4)) > 6281 && parseInt(cardNumber.slice(0,4)) < 6289)) && (cardNumber.length > 15 && cardNumber.length < 20)) {
+    return 'China UnionPay';
   } else {
   	return 'invalid number';
   }
@@ -49,5 +53,9 @@ detectNetwork('5512345678901234');
 detectNetwork('6011345678901234');
 detectNetwork('6011345678901234567');
 detectNetwork('5018345678901234567');
+
+console.log(detectNetwork('6288100000000000000'));
+console.log(detectNetwork('6241000000000000000'));
+
 
 
