@@ -14,6 +14,14 @@ var detectNetwork = function(cardNumber) {
     return 'Diner\'s Club';
   } else if(cardNumber.slice(0,2) === '34' || cardNumber.slice(0,2) === '37' && cardNumber.length === 15){
     return 'American Express';
+  } else if(cardNumber.slice(0,1) === '4' && (cardNumber.length === 13 || cardNumber.length === 16 || cardNumber.length === 19)) {
+    return 'Visa';
+  } else if((cardNumber.slice(0,2) === '51' || cardNumber.slice(0,2) === '52' || cardNumber.slice(0,2) === '53' || cardNumber.slice(0,2) === '54' || cardNumber.slice(0,2) === '55') && cardNumber.length === 16) {
+    return 'MasterCard';
+  } else if((cardNumber.slice(0,4) === '6011' || cardNumber.slice(0,7) === '644-649' || cardNumber.slice(0,2) === '65') && (cardNumber.length === 16 || cardNumber.length === 19)) {
+    return 'Discover';
+  } else if((cardNumber.slice(0,4) === '5018' || cardNumber.slice(0,4) === '5020' || cardNumber.slice(0,4) === '5038' || cardNumber.slice(0,4) === '6304') && (cardNumber.length > 11 && cardNumber.length < 20)) {
+    return 'Maestro';
   } else {
   	return 'invalid number';
   }
@@ -23,7 +31,22 @@ var detectNetwork = function(cardNumber) {
   // Once you've read this, go ahead and try to implement this function, then return to the console.
 };
 
-console.log(detectNetwork('38345678901234'));
-console.log(detectNetwork('39345678901234'));
-console.log(detectNetwork('343456789012345'));
-console.log(detectNetwork('373456789012345'));
+detectNetwork('38345678901234');
+detectNetwork('39345678901234');
+detectNetwork('343456789012345');
+detectNetwork('373456789012345');
+detectNetwork('38345678901234');
+detectNetwork('39345678901234');
+detectNetwork('343456789012345');
+detectNetwork('4123456789012');
+detectNetwork('4123456789012345');
+detectNetwork('4123456789012345678');
+detectNetwork('5112345678901234');
+detectNetwork('5212345678901234');
+detectNetwork('5312345678901234');
+detectNetwork('5412345678901234');
+detectNetwork('5512345678901234');
+detectNetwork('6011345678901234');
+detectNetwork('6011345678901234567');
+detectNetwork('5018345678901234567');
+
