@@ -41,6 +41,19 @@ var FILL_ME_IN = 'Fill this value in';
 //     }
 //   });
 // });
+function createCardNumber(prefix, cardNeededLength) {
+  var prefixLength = prefix.toString().length;
+  var numbersToAdd = cardNeededLength - prefixLength;
+  return prefix + (Math.pow(10, (numbersToAdd - 1))).toString();
+}
+
+describe('Create Card Function', function() {
+  it('has a prefix of 4903 and a length of 16', function() {
+    createCardNumber(4903, 16).should.equal('4903100000000000');
+  });
+});
+
+
 describe('Diner\'s Club', function() {
   // Be careful, tests can have bugs too...
 
@@ -197,5 +210,57 @@ describe('Maestro', function() {
   }
 });
 
-describe('should support China UnionPay')
-describe('should support Switch')
+
+describe('China UnionPay', function() {
+  
+  function testAllPrefixForCard(prefixStart, prefixEnd, creditCardName, length) {
+    for(var prefix = prefixStart; prefix <= prefixEnd; prefix++) {
+      (function(firstNumbers) {
+        var cardNumber = createCardNumber(firstNumbers, length);
+        //console.log(cardNumber);
+        it('has a prefix of ' + firstNumbers + ' and a length of ' + length, function() {
+          detectNetwork(cardNumber).should.equal(creditCardName);
+        });
+      })(prefix);
+    }  
+  }
+
+  for(var i = 16; i < 20; i++) {
+    testAllPrefixForCard(622126, 622925, 'China UnionPay', i);
+    testAllPrefixForCard(624, 626, 'China UnionPay', i);
+    testAllPrefixForCard(6282, 6288, 'China UnionPay', i);
+  }
+});
+
+
+
+describe('Switch', function() {
+  var switchPrefixes = [4903, 4905, 4911, 4936, 564182, 633110, 6333, 6759];
+  for(var i = 0; i < switchPrefixes.length; i++) {
+    (function(firstNumbers) {
+      var cardNumberWith16Numbers = createCardNumber(firstNumbers, 16);
+      var cardNumberWith18Numbers = createCardNumber(firstNumbers, 18);
+      var cardNumberWith19Numbers = createCardNumber(firstNumbers, 19);
+
+      it('has a prefix of ' + firstNumbers + ' and a length of ' + 16, function() {
+        detectNetwork(cardNumberWith16Numbers).should.equal('Switch');
+      });
+
+      it('has a prefix of ' + firstNumbers + ' and a length of ' + 18, function() {
+        detectNetwork(cardNumberWith18Numbers).should.equal('Switch');
+      });
+
+      it('has a prefix of ' + firstNumbers + ' and a length of ' + 19, function() {
+        detectNetwork(cardNumberWith19Numbers).should.equal('Switch');
+      });
+    })(switchPrefixes[i]);  
+  }
+});
+
+
+
+
+
+
+
+
